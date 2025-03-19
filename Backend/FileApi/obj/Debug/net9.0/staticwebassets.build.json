@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "8GiDR1IEsiAmbwZ9QxOjP95ESrMTAyj2G2g8CDA5bLA=",
+  "Source": "FileApi",
+  "BasePath": "_content/FileApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
