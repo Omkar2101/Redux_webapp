@@ -22,7 +22,11 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest ./image_uploader
+          pwd  # Print current working directory
+          ls -la  # List all files and directories
+          cd image_uploader
+          ls -la  # List files inside image_uploader
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest .
 
       - name: Push Docker image to GHCR
         run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest
