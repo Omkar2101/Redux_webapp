@@ -13,6 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3  # Pulls the latest code
 
+      - name: Debug directory structure
+        run: |
+          pwd  # Print current working directory
+          ls -la  # List all files and directories
+          cd image_uploader || echo "Directory image_uploader does not exist"
+          ls -la  # List files inside image_uploader
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -22,11 +29,8 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          pwd  # Print current working directory
-          ls -la  # List all files and directories
-          cd image_uploader
-          ls -la  # List files inside image_uploader
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest .
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest ./image_uploader
 
       - name: Push Docker image to GHCR
         run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest
+        
