@@ -29,7 +29,7 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest ./image_uploader
+          docker buildx build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest ./image_uploader
 
       - name: Push Docker image to GHCR
         run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest
