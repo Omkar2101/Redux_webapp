@@ -23,7 +23,7 @@ jobs:
       - name: Build and tag Docker image
         run: |
           cd image_uploader  # Navigate to React folder
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest ./image_uploader
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest .
 
       - name: Push Docker image to GHCR
         run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest
