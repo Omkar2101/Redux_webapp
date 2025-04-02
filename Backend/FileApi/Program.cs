@@ -4,13 +4,26 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://+:5298"); // Set to listen on port 5298
+// builder.WebHost.UseUrls("http://+:5298"); // Set to listen on port 5298
 
 // Add services to the container.
 builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection("MongoDbSettings"));
-builder.Services.AddSingleton<MongoDbService>();
+builder.Configuration.GetSection("MongoDbSettings"));
+// builder.Services.AddSingleton<MongoDbService>();
 
+// Read MongoDB settings from appsettings.json
+var mongoDbSettings = builder.Configuration.GetSection("MongoDbSettings");
+var connectionString = mongoDbSettings["ConnectionString"];
+var databaseName = mongoDbSettings["DatabaseName"];
+
+// Register MongoDbService with dependency injection
+builder.Services.AddSingleton<MongoDbService>(sp => 
+    new MongoDbService(connectionString, databaseName));
+
+// builder.Services.Configure<MongoDbSettings>(options =>
+// {
+//     options.ConnectionString = builder.Configuration["MongoDbSettings__ConnectionString"];
+// });
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -33,6 +46,8 @@ var app = builder.Build();
 
 app.UseCors("AllowFrontend");
 
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -43,4 +58,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapGet("/", () => {Console.WriteLine("Hell"); return "Hello, World!";});
+
 app.Run();
+

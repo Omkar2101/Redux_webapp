@@ -23,12 +23,18 @@ namespace FileApi.Services
         /// Initializes a new instance of the <see cref="MongoDbService"/> class.
         /// Establishes a connection to MongoDB and configures GridFS.
         /// </summary>
-        public MongoDbService()
-        {
-            var client = new MongoClient("mongodb://localhost:27017");
-            _database = client.GetDatabase("FileDatabase");
-            _gridFsBucket = new GridFSBucket(_database);
-        }
+        // public MongoDbService()
+        // {
+        //     var client = new MongoClient("mongodb://localhost:27017");
+        //     _database = client.GetDatabase("FileDatabase");
+        //     _gridFsBucket = new GridFSBucket(_database);
+        // }
+         public MongoDbService(string connectionString, string databaseName)
+    {
+        var client = new MongoClient(connectionString);
+        _database = client.GetDatabase(databaseName);
+        _gridFsBucket = new GridFSBucket(_database);
+    }
 
         /// <summary>
         /// Uploads a file to MongoDB GridFS.

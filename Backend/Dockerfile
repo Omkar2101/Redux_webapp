@@ -30,7 +30,10 @@ WORKDIR /app
 COPY --from=build /app/FileApi/out .
 
 # Expose port 5298 for the API
-EXPOSE 5298
+EXPOSE 8080
+
+# # Set the environment variable for the port
+# ENV ASPNETCORE_URLS=http://localhost:5298
 
 # Set the entry point
 CMD ["dotnet", "FileApi.dll"]

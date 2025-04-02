@@ -1,0 +1,25 @@
+name: Deploy React to GHCR  # Workflow name
+
+on:
+  push:
+    branches:
+      - DockerBranch  # Runs when pushing to DockerBranch
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest  # Use Ubuntu for the job
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Pulls the latest code
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+
+      - name: Build and tag Docker image
+        run: |
+          cd image_uploader  # Navigate to React folder
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest .
+
+      - name: Push Docker image to GHCR
+        run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest
