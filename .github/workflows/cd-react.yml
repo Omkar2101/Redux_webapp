@@ -33,4 +33,3 @@ jobs:
 
       - name: Push Docker image to GHCR
         run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/redux-webapp-react:latest
-        
