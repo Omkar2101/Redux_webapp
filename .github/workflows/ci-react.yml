@@ -1,0 +1,30 @@
+name: React CI
+
+on:
+  push:
+    branches: [ DockerBranch ]
+  pull_request:
+    branches: [ DockerBranch ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd image_uploader
+          npm ci
+
+      - name: Run unit tests
+        run: |
+          cd image_uploader
+          npx vitest run --coverage
