@@ -163,9 +163,3 @@ C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\obj\Debug
 C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\obj\Debug\net9.0\FileApi.genruntimeconfig.cache
 C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\obj\Debug\net9.0\ref\FileApi.dll
 C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\obj\Debug\net9.0\FileApi.sourcelink.json
-C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\bin\Debug\net9.0\out\web.config
-C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\bin\Debug\net9.0\out\appsettings.Development.json
-C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\bin\Debug\net9.0\out\appsettings.json
-C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\bin\Debug\net9.0\out\FileApi.deps.json
-C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\bin\Debug\net9.0\out\FileApi.runtimeconfig.json
-C:\Users\omiit\Desktop\Tescra_assignments\Redux_webapp\Backend\FileApi\bin\Debug\net9.0\out\FileApi.staticwebassets.endpoints.json

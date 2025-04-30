@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FileApi.Services;
 using Microsoft.AspNetCore.Http;
 using FileApi.Models;
+using System.Net.Http; // For HttpClient
 
 namespace FileApi.Controllers
 {
@@ -45,7 +46,26 @@ namespace FileApi.Controllers
         /// </summary>
         /// <param name="file">The file to upload.</param>
         /// <param name="description">Optional description for the file.</param>
-        /// <returns>Success message with file ID.</returns>
+        // /// <returns>Success message with file ID.</returns>
+        // [HttpPost("upload")]
+        // public async Task<IActionResult> UploadFile([FromForm] IFormFile file, [FromForm] string? description)
+        // {
+        //     if (file == null || file.Length == 0)
+        //         return BadRequest("No file uploaded.");
+
+        //     try
+        //     {
+        //         using var stream = file.OpenReadStream();
+        //         var fileId = await _mongoDbService.UploadFileAsync(stream, file.FileName, description ?? "");
+
+        //         return Ok(new { Message = "File uploaded successfully.", FileId = fileId });
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return StatusCode(500, $"Internal server error: {ex.Message}");
+        //     }
+        // }
+
         [HttpPost("upload")]
         public async Task<IActionResult> UploadFile([FromForm] IFormFile file, [FromForm] string? description)
         {
@@ -54,10 +74,32 @@ namespace FileApi.Controllers
 
             try
             {
+                // Upload file to MongoDB
                 using var stream = file.OpenReadStream();
                 var fileId = await _mongoDbService.UploadFileAsync(stream, file.FileName, description ?? "");
 
-                return Ok(new { Message = "File uploaded successfully.", FileId = fileId });
+                // Send file to Python FastAPI
+                using var httpClient = new HttpClient();
+                using var content = new MultipartFormDataContent();
+                content.Add(new StreamContent(file.OpenReadStream()), "file", file.FileName);
+
+                var pythonApiUrl = "http://127.0.0.1:8000/detect"; // Replace with your FastAPI endpoint
+                var response = await httpClient.PostAsync(pythonApiUrl, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return StatusCode((int)response.StatusCode, new { Message = "Failed to process image in Python API." });
+                }
+
+                var pythonApiResponse = await response.Content.ReadAsStringAsync();
+
+                // Return combined response
+                return Ok(new
+                {
+                    Message = "File uploaded successfully.",
+                    FileId = fileId,
+                    PythonApiResponse = pythonApiResponse
+                });
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/files'; // Your backend API
+const API_URL = 'http://localhost:5298/api/files'; // Your backend API
 
 // Fetch all uploaded images
 export const fetchImages = async () => {
