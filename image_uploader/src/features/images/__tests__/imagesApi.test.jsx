@@ -11,7 +11,7 @@ describe('imagesApi', () => {
 
     const result = await fetchImages();
     expect(result).toEqual(mockData);
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:8080/api/files');
+    expect(axios.get).toHaveBeenCalledWith('http://localhost:5298/api/files');
   });
 
   test('uploadImage posts form data and returns response', async () => {
@@ -27,6 +27,6 @@ describe('imagesApi', () => {
 
   test('getImageUrl returns correct URL', () => {
     const fileId = 'abc123';
-    expect(getImageUrl(fileId)).toBe(`http://localhost:8080/api/files/${fileId}`);
+    expect(getImageUrl(fileId)).toBe(`http://localhost:5298/api/files/${fileId}`);
   });
 });
