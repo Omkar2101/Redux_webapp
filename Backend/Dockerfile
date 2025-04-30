@@ -29,7 +29,7 @@ WORKDIR /app
 # Copy the published app from the build stage
 COPY --from=build /app/FileApi/out .
 
-# Expose port 5298 for the API
+# Expose port 8080
 EXPOSE 8080
 
 # # Set the environment variable for the port

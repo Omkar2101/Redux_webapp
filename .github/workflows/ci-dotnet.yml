@@ -10,26 +10,35 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      # Setup MongoDB service container
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name:  Setup .NET SDK
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '9.0.x'  # Change this to match your .NET version
 
-      - name:  Restore dependencies
+      - name: Restore dependencies
         run: |
           cd Backend  # or whatever the .csproj directory is
           dotnet restore
 
-      - name:  Build the project
+      - name: Build the project
         run: |
           cd Backend
           dotnet build --no-restore --configuration Release
 
-      - name:  Run unit tests
+      - name: Run unit tests
         run: |
           cd Backend
           dotnet test --no-build --verbosity normal
+        env:
+          MONGODB_CONNECTION_STRING: "mongodb://localhost:27017"
